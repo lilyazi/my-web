@@ -2070,7 +2070,7 @@ header {
 <button
     type="button"
     class="prev-button"
-    onclick="previousWord()">
+    onclick="previousWord(event)">
 
     <span>←</span>
     이전
@@ -3375,13 +3375,15 @@ function updateImportantButton() {
 /* =====================================================
    다음 단어
 ===================================================== */
+function nextWord(event) {
 
-function nextWord() {
+    if (event) {
+        event.preventDefault();
+    }
 
     currentIndex++;
 
     if (currentIndex >= words.length) {
-
         currentIndex = 0;
 
         alert(
@@ -3389,15 +3391,20 @@ function nextWord() {
         );
     }
 
+    saveCurrentPosition();
     renderWord();
-
 }
+
 
 /* =====================================================
    이전 단어
 ===================================================== */
 
-function previousWord() {
+function previousWord(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
 
     currentIndex--;
 
@@ -3405,9 +3412,10 @@ function previousWord() {
         currentIndex = words.length - 1;
     }
 
+    saveCurrentPosition();
     renderWord();
-
 }
+
 /* =====================================================
    진행률
 ===================================================== */
@@ -3531,8 +3539,48 @@ function showReview() {
    단어장
 ===================================================== */
 
-function showVocabulary() {
+function showReview() {
 
+    const incomplete =
+        words.filter(
+            word =>
+                !completedWords.includes(
+                    word.word
+                )
+        );
+
+    if (incomplete.length === 0) {
+
+        alert(
+            "🎉 모든 단어를 완료했어요!"
+        );
+
+        return;
+    }
+
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            incomplete.length
+        );
+
+    currentIndex =
+        words.indexOf(
+            incomplete[randomIndex]
+        );
+
+    saveCurrentPosition();
+
+    renderWord();
+
+}   // ★ showReview 닫기
+
+
+/* =====================================================
+   단어장
+===================================================== */
+
+function showVocabulary() {
 
     const important =
         words.filter(
@@ -3542,19 +3590,14 @@ function showVocabulary() {
                 )
         );
 
-
-    if (
-        important.length === 0
-    ) {
+    if (important.length === 0) {
 
         alert(
             "아직 중요 단어가 없어요.\n⭐ 중요 단어 버튼을 눌러보세요!"
         );
 
         return;
-
     }
-
 
     const list =
         important
@@ -3564,12 +3607,10 @@ function showVocabulary() {
             )
             .join("\n");
 
-
     alert(
         "⭐ 나의 중요 단어\n\n" +
         list
     );
-
 }
 
 
