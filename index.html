@@ -2075,25 +2075,25 @@ header {
     <span>←</span>
     이전
 
+<button
+    type="button"
+    class="complete-button"
+    id="completeButton"
+    onclick="toggleComplete()">
+
+    ✓ 알겠어요
+
 </button>
 
-    <button
-        class="complete-button"
-        id="completeButton"
-        onclick="toggleComplete()">
+<button
+    type="button"
+    class="next-button"
+    onclick="nextWord(event)">
 
-        ✓ 알겠어요
+    <span>→</span>
+    NEXT
 
-    </button>
-
-    <button
-        class="next-button"
-        onclick="nextWord()">
-
-        <span>→</span>
-        NEXT
-
-    </button>
+</button>
 
 </div>
 
@@ -3375,12 +3375,18 @@ function updateImportantButton() {
    다음 단어
 ===================================================== */
 
-function nextWord() {
+function nextWord(event) {
+
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    const scrollPosition = window.scrollY;
 
     currentIndex++;
 
     if (currentIndex >= words.length) {
-
         currentIndex = 0;
 
         alert(
@@ -3390,45 +3396,36 @@ function nextWord() {
 
     renderWord();
 
+    requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosition);
+    });
 }
-
 
 /* =====================================================
    이전 단어
 ===================================================== */
 
-function previousWord() {
+function previousWord(event) {
 
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    const scrollPosition = window.scrollY;
 
     currentIndex--;
 
-
-    if (
-        currentIndex < 0
-    ) {
-
-        currentIndex =
-            words.length - 1;
-
+    if (currentIndex < 0) {
+        currentIndex = words.length - 1;
     }
-
-
-    saveCurrentPosition();
-
 
     renderWord();
 
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
+    requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosition);
     });
-
 }
-
 
 /* =====================================================
    진행률
@@ -3546,15 +3543,7 @@ function showReview() {
     renderWord();
 
 
-    window.scrollTo({
 
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-}
 
 
 /* =====================================================
