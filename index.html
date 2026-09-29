@@ -2070,13 +2070,12 @@ header {
 <button
     type="button"
     class="prev-button"
-    id="prevButton">
+    onclick="previousWord()">
 
     <span>←</span>
     이전
 
 </button>
-
 <button
     type="button"
     class="complete-button"
@@ -3377,18 +3376,12 @@ function updateImportantButton() {
    다음 단어
 ===================================================== */
 
-function nextWord(event) {
-
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    const scrollPosition = window.scrollY;
+function nextWord() {
 
     currentIndex++;
 
     if (currentIndex >= words.length) {
+
         currentIndex = 0;
 
         alert(
@@ -3398,23 +3391,13 @@ function nextWord(event) {
 
     renderWord();
 
-    requestAnimationFrame(() => {
-        window.scrollTo(0, scrollPosition);
-    });
 }
 
 /* =====================================================
    이전 단어
 ===================================================== */
 
-function previousWord(event) {
-
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-
-    const scrollPosition = window.scrollY;
+function previousWord() {
 
     currentIndex--;
 
@@ -3424,11 +3407,7 @@ function previousWord(event) {
 
     renderWord();
 
-    requestAnimationFrame(() => {
-        window.scrollTo(0, scrollPosition);
-    });
 }
-
 /* =====================================================
    진행률
 ===================================================== */
