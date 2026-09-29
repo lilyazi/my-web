@@ -1358,64 +1358,38 @@ header {
 
 .prev-button {
 
-    width:
-        76px;
+    width: 80px;
 
-    min-height:
-        58px;
+    min-height: 58px;
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
     border:
         2px solid
-        #b8ccef;
+        #b9d4f7;
 
     background:
-        #f5f8ff;
+        #f5f9ff;
 
-    color:
-        #6480b5;
+    color: #6689bd;
 
-    font-size:
-        12px;
+    font-size: 13px;
 
-    font-weight:
-        900;
+    font-weight: 900;
 
-    cursor:
-        pointer;
-
-    transition:
-        transform .12s ease;
-
+    cursor: pointer;
 }
-
-
-.prev-button:active {
-
-    transform:
-        scale(.93);
-
-}
-
 
 .prev-button span {
 
-    display:
-        block;
+    display: block;
 
-    font-size:
-        25px;
+    font-size: 22px;
 
-    line-height:
-        20px;
+    line-height: 20px;
 
-    margin-bottom:
-        3px;
-
+    margin-bottom: 3px;
 }
-
 
 /* =====================================================
    다음 버튼
@@ -2091,42 +2065,36 @@ header {
          학습 버튼
     ================================================== -->
 
-    <div class="action-row">
+<div class="action-row">
 
+    <button
+        class="prev-button"
+        onclick="previousWord()">
 
-        <button
-            class="prev-button"
-            onclick="previousWord()">
+        <span>←</span>
+        이전
 
-            <span>←</span>
+    </button>
 
-            이전
+    <button
+        class="complete-button"
+        id="completeButton"
+        onclick="toggleComplete()">
 
-        </button>
+        ✓ 알겠어요
 
+    </button>
 
-        <button
-            class="complete-button"
-            id="completeButton"
-            onclick="toggleComplete()">
+    <button
+        class="next-button"
+        onclick="nextWord()">
 
-            ✓ 알겠어요
+        <span>→</span>
+        NEXT
 
-        </button>
+    </button>
 
-
-        <button
-            class="next-button"
-            onclick="nextWord()">
-
-            <span>→</span>
-
-            NEXT
-
-        </button>
-
-
-    </div>
+</div>
 
 
 </section>
@@ -3408,38 +3376,18 @@ function updateImportantButton() {
 
 function nextWord() {
 
-
     currentIndex++;
 
-
-    if (
-        currentIndex >=
-        words.length
-    ) {
+    if (currentIndex >= words.length) {
 
         currentIndex = 0;
-
 
         alert(
             "100개 단어를 모두 살펴봤어요! 🎉"
         );
-
     }
 
-
-    saveCurrentPosition();
-
-
     renderWord();
-
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
 
 }
 
