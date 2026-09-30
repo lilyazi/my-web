@@ -243,6 +243,168 @@
     display: none !important;
 }
 
+/* =====================================================
+   📖 학습 카테고리 화면
+===================================================== */
+
+.study-screen {
+    display: none;
+    min-height: calc(100vh - 88px);
+    padding: 18px 18px 130px;
+    position: relative;
+    z-index: 10;
+}
+
+.study-screen.show {
+    display: block;
+}
+
+.study-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.study-header-icon {
+    font-size: 42px;
+}
+
+.study-header-title {
+    margin-top: 7px;
+    font-size: 25px;
+    font-weight: 900;
+    color: #355b96;
+}
+
+.study-header-sub {
+    margin-top: 6px;
+    color: #7890b4;
+    font-size: 13px;
+}
+
+.study-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.study-category-button {
+    width: 100%;
+    min-height: 82px;
+    padding: 15px 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 24px;
+
+    background: rgba(255,255,255,.94);
+    box-shadow: 0 7px 22px rgba(76,116,175,.11);
+
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.study-category-button:active {
+    transform: scale(.97);
+}
+
+.study-category-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+    background: #eef5ff;
+    font-size: 25px;
+}
+
+.study-category-info {
+    flex: 1;
+}
+
+.study-category-title {
+    color: #45699f;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.study-category-description {
+    margin-top: 4px;
+    color: #8a9bb5;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.study-category-count {
+    color: #6d8bc0;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* 학습 중 상단 표시 */
+
+.learning-bar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0 18px 12px;
+    padding: 10px 14px;
+
+    border-radius: 18px;
+    background: rgba(255,255,255,.9);
+}
+
+.learning-bar.show {
+    display: flex;
+}
+
+.learning-category-name {
+    color: #5578b4;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.learning-back-button {
+    border: none;
+    background: #edf4ff;
+    color: #6689bd;
+    padding: 7px 11px;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   📖 학습 화면에서 홈 헤더 공간 줄이기
+===================================================== */
+
+body:has(.study-screen.show) header {
+    min-height: 0px;
+    padding-bottom: 10px;
+}
+
+body:has(.study-screen.show) .hero-title,
+body:has(.study-screen.show) .hero-subtitle,
+body:has(.study-screen.show) .hero-character,
+body:has(.study-screen.show) .hero-fallback,
+body:has(.study-screen.show) .lucky-bubble {
+    display: none;
+}
+
  </style> </head> <body> <div class="app">
 <div class="sky-decoration">
 
@@ -289,7 +451,6 @@
 
         <div class="hero-title">
             도하 루하와 독일어
-        
         </div>
 
         <div class="hero-subtitle">
@@ -365,6 +526,21 @@
         </div>
 
     </section>
+
+<div class="learning-bar" id="learningBar">
+
+    <div
+        class="learning-category-name"
+        id="learningCategoryName">
+    </div>
+
+    <button
+        class="learning-back-button"
+        onclick="showStudyCategories()">
+        ← 학습 목록
+    </button>
+
+</div>
 
     <section class="word-card">
 
@@ -531,31 +707,61 @@
 
 </div>
 
+<!-- =====================================================
+     📖 학습 카테고리 화면
+===================================================== -->
+
+<section class="study-screen" id="studyScreen">
+
+    <div class="study-header">
+
+        <div class="study-header-icon">
+            📖
+        </div>
+
+        <div class="study-header-title">
+            독일어 학습
+        </div>
+
+        <div class="study-header-sub">
+            어떤 단어부터 공부해볼까요?
+        </div>
+
+    </div>
+
+    <div
+        class="study-category-list"
+        id="studyCategoryList">
+    </div>
+
+</section>
+
+
 <nav class="bottom-nav">
 
     <button
-        class="nav-button active"
-        onclick="showMessage('홈')">
+    class="nav-button active"
+    onclick="goHome()">
 
-        <span class="nav-icon">
-            🏠
-        </span>
+    <span class="nav-icon">
+        🏠
+    </span>
 
-        홈
+    홈
 
-    </button>
+</button>
 
     <button
-        class="nav-button"
-        onclick="showMessage('학습')">
+    class="nav-button"
+    onclick="showStudyCategories()">
 
-        <span class="nav-icon">
-            📖
-        </span>
+    <span class="nav-icon">
+        📖
+    </span>
 
-        학습
+    학습
 
-    </button>
+</button>
 
     <button
         class="nav-button"
@@ -582,8 +788,12 @@
     </button>
 
 </nav>
-</div> <script> /*
+</div>
+
+
 <script>
+
+
     /* =====================================================
        독일어 단어 데이터
 
@@ -1507,9 +1717,119 @@
        데이터 검증
     ===================================================== */
 
-    const TOTAL_WORDS = words.length;
+/* =====================================================
+   📚 학습 그룹
+===================================================== */
 
-    document.getElementById("totalWordCount").textContent = TOTAL_WORDS;
+const studyGroups = [
+    {
+        id: "basic",
+        name: "기초",
+        icon: "🌱",
+        description: "인사 · 가족 · 숫자 · 시간 · 기본 단어"
+    },
+    {
+        id: "daily",
+        name: "일상",
+        icon: "🏠",
+        description: "집 · 학교 · 음식 · 쇼핑 · 생활"
+    },
+    {
+        id: "verb",
+        name: "동사",
+        icon: "🗣️",
+        description: "자주 사용하는 독일어 동사"
+    },
+    {
+        id: "adjective",
+        name: "형용사",
+        icon: "✨",
+        description: "일상에서 자주 쓰는 형용사"
+    },
+    {
+        id: "travel",
+        name: "여행·생활",
+        icon: "✈️",
+        description: "교통 · 길찾기 · 위치 · 독일 생활"
+    },
+    {
+        id: "health",
+        name: "건강",
+        icon: "🏥",
+        description: "병원 · 신체 · 건강 · 응급"
+    },
+    {
+        id: "expression",
+        name: "표현",
+        icon: "💬",
+        description: "실제로 자주 사용하는 독일어 표현"
+    }
+];
+
+
+/* =====================================================
+   단어의 학습 그룹 자동 분류
+===================================================== */
+
+function getStudyGroup(word) {
+
+    if (word.type === "verb") {
+        return "verb";
+    }
+
+    if (word.type === "adj") {
+        return "adjective";
+    }
+
+    if (word.type === "phrase") {
+        return "expression";
+    }
+
+    const category = word.category || "";
+
+    if (
+        ["병원", "건강", "신체", "응급"].includes(category)
+    ) {
+        return "health";
+    }
+
+    if (
+        ["교통", "길찾기", "위치", "독일 생활"].includes(category)
+    ) {
+        return "travel";
+    }
+
+    if (
+        ["가족", "사람", "학교", "집", "생활",
+         "음식", "쇼핑"].includes(category)
+    ) {
+        return "daily";
+    }
+
+    if (
+        ["기본 인사", "기본 표현", "숫자", "시간",
+         "기초 단어"].includes(category)
+    ) {
+        return "basic";
+    }
+
+    /* 나머지는 기초로 넣습니다. */
+    return "basic";
+}
+
+
+/* =====================================================
+   현재 학습 상태
+===================================================== */
+
+let activeStudyGroup = null;
+let studyWords = words;
+
+
+/* 전체 단어 수 표시 */
+
+document.getElementById("totalWordCount").textContent =
+    words.length;
 
 
     /* =====================================================
@@ -1594,13 +1914,14 @@
         }
 
         if (
-            currentIndex < 0 ||
-            currentIndex >= words.length
-        ) {
-            currentIndex = 0;
-        }
+    currentIndex < 0 ||
+    currentIndex >= studyWords.length
+) {
+    currentIndex = 0;
+}
 
-        const current = words[currentIndex];
+        const current = studyWords[currentIndex];
+
 
         const flashcard = document.getElementById("flashcard");
 const flashcardMeaning = document.getElementById("flashcardMeaning");
@@ -1767,43 +2088,84 @@ if (flashcardMeaning) {
     ===================================================== */
 
     function toggleComplete() {
-        const word =
-            words[currentIndex].word;
+    const word = words[currentIndex].word;
 
-        if (completedWords.includes(word)) {
-            completedWords =
-                completedWords.filter(
-                    item => item !== word
-                );
-        } else {
-            completedWords.push(word);
-        }
-
-        saveCompleted();
-        updateCompleteButton();
-        updateProgress();
+    if (completedWords.includes(word)) {
+        completedWords =
+            completedWords.filter(item => item !== word);
+    } else {
+        completedWords.push(word);
     }
+
+    saveCompleted();
+    updateCompleteButton();
+    updateProgress();
+}
+
+
+function updateCompleteButton() {
+    const button = document.getElementById("completeButton");
+
+    if (!button) {
+        return;
+    }
+
+    const word = words[currentIndex].word;
+
+    if (completedWords.includes(word)) {
+        button.textContent = "✓ 학습 완료";
+        button.classList.add("done");
+    } else {
+        button.textContent = "✓ 알겠어요";
+        button.classList.remove("done");
+    }
+}
+
 
 
     /* =====================================================
        완료 버튼
     ===================================================== */
 
-    function updateCompleteButton() {
-        const button =
-            document.getElementById("completeButton");
+   function updateProgress() {
 
-        const word =
-            words[currentIndex].word;
+    const completed =
+        completedWords.filter(
+            word =>
+                studyWords.some(
+                    item => item.word === word
+                )
+        ).length;
 
-        if (completedWords.includes(word)) {
-            button.textContent = "✓ 학습 완료";
-            button.classList.add("done");
-        } else {
-            button.textContent = "✓ 알겠어요";
-            button.classList.remove("done");
-        }
-    }
+
+    const percent =
+        studyWords.length === 0
+            ? 0
+            : Math.round(
+                completed / studyWords.length * 100
+            );
+
+
+    document.getElementById(
+        "completedCount"
+    ).textContent = completed;
+
+
+    document.getElementById(
+        "totalWordCount"
+    ).textContent = studyWords.length;
+
+
+    document.getElementById(
+        "progressPercent"
+    ).textContent = percent + "%";
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width = percent + "%";
+}
+
 
 
     /* =====================================================
@@ -1852,19 +2214,21 @@ if (flashcardMeaning) {
     ===================================================== */
 
     function nextWord() {
-        currentIndex++;
 
-        if (currentIndex >= words.length) {
-            currentIndex = 0;
+    currentIndex++;
 
-            alert(
-                `🎉 ${words.length}개 단어를 모두 살펴봤어요!`
-            );
-        }
+    if (currentIndex >= studyWords.length) {
 
-        saveCurrentPosition();
-        renderWord();
+        currentIndex = 0;
+
+        alert(
+            `🎉 ${studyWords.length}개 단어를 모두 살펴봤어요!`
+        );
     }
+
+    saveCurrentPosition();
+    renderWord();
+}
 
 
     /* =====================================================
@@ -1875,15 +2239,16 @@ if (flashcardMeaning) {
     ===================================================== */
 
     function previousWord() {
-        currentIndex--;
 
-        if (currentIndex < 0) {
-            currentIndex = words.length - 1;
-        }
+    currentIndex--;
 
-        saveCurrentPosition();
-        renderWord();
+    if (currentIndex < 0) {
+        currentIndex = studyWords.length - 1;
     }
+
+    saveCurrentPosition();
+    renderWord();
+}
 
 
     /* =====================================================
@@ -1891,24 +2256,25 @@ if (flashcardMeaning) {
     ===================================================== */
 
     function updateProgress() {
-        const completed =
-            completedWords.filter(
-                word =>
-                    words.some(
-                        item => item.word === word
-                    )
-            ).length;
+       const completed =
+    completedWords.filter(
+        word =>
+            studyWords.some(
+                item => item.word === word
+            )
+    ).length;
 
         const percent =
-            words.length === 0
-                ? 0
-                : Math.round(
-                    completed / words.length * 100
-                );
+    studyWords.length === 0
+        ? 0
+        : Math.round(
+            completed / studyWords.length * 100
+        );
+
 
         document.getElementById(
-            "completedCount"
-        ).textContent = completed;
+    "totalWordCount"
+).textContent = studyWords.length;
 
         document.getElementById(
             "progressPercent"
@@ -1923,16 +2289,64 @@ if (flashcardMeaning) {
     /* =====================================================
        메뉴
     ===================================================== */
+function showMessage(name) {
 
-    function showMessage(name) {
-        if (name === "홈") {
-            return;
+    if (name === "홈") {
+        return;
+    }
+
+    if (name === "학습") {
+        const card = document.getElementById("flashcard");
+
+        if (card) {
+            card.classList.add("flipped");
         }
 
-        alert(
-            `${name} 메뉴는 다음 단계에서 만들어볼게요 😊`
-        );
+        return;
     }
+
+    alert(`${name} 메뉴는 다음 단계에서 만들어볼게요 😊`);
+}
+/* =====================================================
+   🏠 홈 화면
+===================================================== */
+
+function showHome() {
+
+    document
+        .getElementById("studyScreen")
+        .classList.remove("show");
+
+
+    document
+        .querySelector(".word-card")
+        .style.display = "";
+
+    document
+        .querySelector(".progress-card")
+        .style.display = "";
+
+    document
+        .querySelector(".study-tip")
+        .style.display = "";
+
+
+    document
+        .getElementById("learningBar")
+        .classList.remove("show");
+
+
+    activeStudyGroup = null;
+
+    studyWords = words;
+
+    currentIndex = 0;
+
+    renderWord();
+
+    updateProgress();
+}
+
 
 
     /* =====================================================
@@ -1943,33 +2357,79 @@ if (flashcardMeaning) {
     ===================================================== */
 
     function showReview() {
-        const incomplete =
-            words.filter(
-                word =>
-                    !completedWords.includes(
-                        word.word
-                    )
-            );
 
-        if (incomplete.length === 0) {
-            alert("🎉 모든 단어를 완료했어요!");
-            return;
-        }
+    /* 학습 카테고리 화면 닫기 */
 
-        const randomIndex =
-            Math.floor(
-                Math.random() * incomplete.length
-            );
+    const studyScreen =
+        document.getElementById("studyScreen");
 
-        currentIndex =
-            words.indexOf(
-                incomplete[randomIndex]
-            );
-
-        saveCurrentPosition();
-        renderWord();
+    if (studyScreen) {
+        studyScreen.classList.remove("show");
     }
 
+
+    /* 기존 단어 화면 다시 표시 */
+
+    const wordCard =
+        document.querySelector(".word-card");
+
+    const progressCard =
+        document.querySelector(".progress-card");
+
+    const studyTip =
+        document.querySelector(".study-tip");
+
+    const learningBar =
+        document.getElementById("learningBar");
+
+
+    if (wordCard) {
+        wordCard.style.display = "";
+    }
+
+    if (progressCard) {
+        progressCard.style.display = "";
+    }
+
+    if (studyTip) {
+        studyTip.style.display = "";
+    }
+
+    if (learningBar) {
+        learningBar.classList.remove("show");
+    }
+
+
+    /* =========================
+       기존 복습 기능
+    ========================= */
+
+    const incomplete =
+        words.filter(
+            word =>
+                !completedWords.includes(
+                    word.word
+                )
+        );
+
+    if (incomplete.length === 0) {
+        alert("🎉 모든 단어를 완료했어요!");
+        return;
+    }
+
+    const randomIndex =
+        Math.floor(
+            Math.random() * incomplete.length
+        );
+
+    currentIndex =
+        words.indexOf(
+            incomplete[randomIndex]
+        );
+
+    saveCurrentPosition();
+    renderWord();
+}
 
     /* =====================================================
        단어장
@@ -2064,6 +2524,262 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+/* =====================================================
+   📖 학습 카테고리 화면
+===================================================== */
+
+function showStudyCategories() {
+
+    const mainContent =
+        document.querySelector(".content");
+
+    const studyScreen =
+        document.getElementById("studyScreen");
+
+    const wordCard =
+        document.querySelector(".word-card");
+
+    const progressCard =
+        document.querySelector(".progress-card");
+
+    const studyTip =
+        document.querySelector(".study-tip");
+
+    const learningBar =
+        document.getElementById("learningBar");
+
+    const categoryList =
+        document.getElementById("studyCategoryList");
+
+
+    /* 기존 홈 콘텐츠 숨기기 */
+
+    if (wordCard) {
+        wordCard.style.display = "none";
+    }
+
+    if (progressCard) {
+        progressCard.style.display = "none";
+    }
+
+    if (studyTip) {
+        studyTip.style.display = "none";
+    }
+
+    if (learningBar) {
+        learningBar.classList.remove("show");
+    }
+
+
+    /* 학습 화면 표시 */
+
+    studyScreen.classList.add("show");
+
+
+    /* 카테고리 버튼 생성 */
+
+    categoryList.innerHTML = "";
+
+
+    studyGroups.forEach(group => {
+
+        const count =
+            words.filter(
+                word =>
+                    getStudyGroup(word) === group.id
+            ).length;
+
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "study-category-button";
+
+
+        button.innerHTML = `
+
+            <div class="study-category-icon">
+                ${group.icon}
+            </div>
+
+            <div class="study-category-info">
+
+                <div class="study-category-title">
+                    ${group.name}
+                </div>
+
+                <div class="study-category-description">
+                    ${group.description}
+                </div>
+
+            </div>
+
+            <div class="study-category-count">
+                ${count}개
+            </div>
+
+        `;
+
+
+        button.addEventListener(
+            "click",
+            () => startStudyGroup(group.id)
+        );
+
+
+        categoryList.appendChild(button);
+
+    });
+}
+
+/* =====================================================
+   📚 카테고리 학습 시작
+===================================================== */
+
+function startStudyGroup(groupId) {
+
+    activeStudyGroup = groupId;
+
+
+    /* 선택한 그룹의 단어만 가져옵니다. */
+
+    studyWords =
+        words.filter(
+            word =>
+                getStudyGroup(word) === groupId
+        );
+
+
+    if (studyWords.length === 0) {
+
+        alert("아직 이 카테고리에 단어가 없어요.");
+
+        return;
+    }
+
+
+    /* 첫 단어부터 시작 */
+
+    currentIndex = 0;
+
+
+    /* 학습 화면 숨기기 */
+
+    document
+        .getElementById("studyScreen")
+        .classList.remove("show");
+
+
+    /* 기존 화면 표시 */
+
+    document
+        .querySelector(".word-card")
+        .style.display = "";
+
+    document
+        .querySelector(".progress-card")
+        .style.display = "";
+
+    document
+        .querySelector(".study-tip")
+        .style.display = "";
+
+
+    /* 학습 중 표시 */
+
+    const group =
+        studyGroups.find(
+            item => item.id === groupId
+        );
+
+
+    const learningBar =
+        document.getElementById("learningBar");
+
+    const learningCategoryName =
+        document.getElementById(
+            "learningCategoryName"
+        );
+
+
+    learningCategoryName.textContent =
+        `${group.icon} ${group.name} 학습 중`;
+
+    learningBar.classList.add("show");
+
+
+    /* 진행률 업데이트 */
+
+    updateProgress();
+
+
+    saveCurrentPosition();
+
+    renderWord();
+
+
+    /* 화면을 단어 카드 위치로 이동 */
+
+    document
+        .querySelector(".word-card")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+}
+
+/* =====================================================
+   🏠 홈으로 돌아가기
+===================================================== */
+
+function goHome() {
+
+    const studyScreen =
+        document.getElementById("studyScreen");
+
+    const wordCard =
+        document.querySelector(".word-card");
+
+    const progressCard =
+        document.querySelector(".progress-card");
+
+    const studyTip =
+        document.querySelector(".study-tip");
+
+    const learningBar =
+        document.getElementById("learningBar");
+
+
+    /* 학습 카테고리 화면 숨기기 */
+
+    if (studyScreen) {
+        studyScreen.classList.remove("show");
+    }
+
+
+    /* 기존 홈 화면 다시 보여주기 */
+
+    if (wordCard) {
+        wordCard.style.display = "";
+    }
+
+    if (progressCard) {
+        progressCard.style.display = "";
+    }
+
+    if (studyTip) {
+        studyTip.style.display = "";
+    }
+
+
+    /* 학습 중 표시 제거 */
+
+    if (learningBar) {
+        learningBar.classList.remove("show");
+    }
+}
 
 
 
